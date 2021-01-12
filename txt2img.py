@@ -3,25 +3,30 @@ from io import BytesIO
 from os import listdir
 from os.path import isfile, join
 from selenium import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import base64
 import os
 import uuid
-import time
+import functions
 
 def make_test_img(text, align, spacing, font_path, font_name, font_format, color):
-    file_path = 'html_temp/'
+    file_path = 'html_temp'
+    functions.check_dir_create(file_path)
     text = text.replace('\n', '<br>')
     text = text.replace('%S2F', '/')
     print(repr(text))
     #driver = webdriver.Chrome('Drivers/chromedriver')
-    driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", DesiredCapabilities.CHROME)
+    #driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", DesiredCapabilities.CHROME)
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--window-size=1420,1080')
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--disable-gpu')
+    driver = webdriver.Chrome(chrome_options=chrome_options)
     file_name = create_file(text, align, spacing, file_path, font_path, font_name, font_format, color)
-    #driver.get('http://127.0.0.1:5001/render_text'+'/'+text+'/'+align+'/'+spacing+'/'+font_name+'/'+font_format+'/'+color)
-    file_abstr = os.path.abspath(file_path+file_name)
+    file_abstr = os.path.abspath(file_path+"/"+file_name)
     print('getting sc from '+file_abstr)
-    #driver.get('file://'+file_abstr)
-    driver.get("http://host.docker.internal:5000/sample/"+file_name)
+    driver.get('file://'+file_abstr)
+    #driver.get("http://host.docker.internal:5000/sample/"+file_name)
     image_base64 = driver.find_element_by_id('page').screenshot_as_base64
     driver.quit()
     if os.path.exists(file_abstr):
