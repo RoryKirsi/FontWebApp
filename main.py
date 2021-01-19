@@ -12,8 +12,6 @@ CORS(app)
 
 @app.route('/')
 def hello():
-    for x in range(0, 10000):
-        a = x+x*x
     return 'hello wow'
 
 @app.route('/get_image/<string:text>/<int:width_size>/<int:height_size>/<string:align>/<int:spacing>/<string:font>/<string:color>/<string:size_change_code>', methods=['GET'])
@@ -69,4 +67,4 @@ def uploaded_existed_file(filename):
 #     return send_from_directory('html_temp', filename)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port="5000")

@@ -12,6 +12,15 @@ def check_file_not_exist(file_path, filename):
         os.mkdir(file_path)
         return True
 
-def check_dir_create(dir):
+def dir_create(dir):
     if not os.path.exists(dir):
         os.makedirs(dir)
+
+def check_dir_exist_empty(dir):
+    if os.path.exists(dir) and os.path.isdir(dir):
+        if not os.listdir(dir):
+            return False
+        else:
+            return True
+    else:
+        return False

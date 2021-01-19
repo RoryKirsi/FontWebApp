@@ -10,7 +10,7 @@ import functions
 
 def make_test_img(text, align, spacing, font_path, font_name, font_format, color):
     file_path = 'html_temp'
-    functions.check_dir_create(file_path)
+    functions.dir_create(file_path)
     text = text.replace('\n', '<br>')
     text = text.replace('%S2F', '/')
     print(repr(text))
