@@ -30,10 +30,10 @@ def make_test_img(text, align, spacing, font_path, font_name, font_format, color
     #driver.get("http://host.docker.internal:5000/sample/"+file_name)
     image_base64 = driver.find_element_by_id('page').screenshot_as_base64
     driver.quit()
-    if os.path.exists(file_relative):
-        os.remove(file_relative)
-    else:
-        print("Temp HTML not existed.")
+    # if os.path.exists(file_relative):
+    #     os.remove(file_relative)
+    # else:
+    #     print("Temp HTML not existed.")
     img = Image.open(BytesIO(base64.b64decode(image_base64)))
     width, height = img.size
     return image_base64, (width, height)
