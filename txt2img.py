@@ -23,14 +23,15 @@ def make_test_img(text, align, spacing, font_path, font_name, font_format, color
     chrome_options.add_argument('--disable-gpu')
     driver = webdriver.Chrome(chrome_options=chrome_options)
     file_name = create_file(text, align, spacing, file_path, font_path, font_name, font_format, color)
-    file_abstr = os.path.abspath(file_path+"/"+file_name)
-    print('getting sc from '+file_abstr)
-    driver.get('file://'+file_abstr)
+    #file_abstr = os.path.abspath(file_path+"/"+file_name)
+    file_relative = "/"+file_path+"/"+file_name
+    print('getting sc from '+file_relative)
+    driver.get('file://'+file_relative)
     #driver.get("http://host.docker.internal:5000/sample/"+file_name)
     image_base64 = driver.find_element_by_id('page').screenshot_as_base64
     driver.quit()
-    if os.path.exists(file_abstr):
-        os.remove(file_abstr)
+    if os.path.exists(file_relative):
+        os.remove(file_relative)
     else:
         print("Temp HTML not existed.")
     img = Image.open(BytesIO(base64.b64decode(image_base64)))
