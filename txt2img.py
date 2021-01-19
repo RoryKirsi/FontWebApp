@@ -30,10 +30,10 @@ def make_test_img(text, align, spacing, font_path, font_name, font_format, color
     #driver.get("http://host.docker.internal:5000/sample/"+file_name)
     image_base64 = driver.find_element_by_id('page').screenshot_as_base64
     driver.quit()
-    # if os.path.exists(file_relative):
-    #     os.remove(file_relative)
-    # else:
-    #     print("Temp HTML not existed.")
+    if os.path.exists(file_relative):
+        os.remove(file_relative)
+    else:
+        print("Temp HTML not existed.")
     img = Image.open(BytesIO(base64.b64decode(image_base64)))
     width, height = img.size
     return image_base64, (width, height)
@@ -168,7 +168,7 @@ def create_file(text, align, spacing, file_path, font_path, font_name, font_form
 
     html_content = ('<!DOCTYPE html>\n<html lang="en">\n\n<style>\n@font-face {\nfont-family: %s;\nsrc: url("%s");\nfont-weight: normal;\nfont-style: normal;\n}\n#page\n{\nfont-family: %s;\nfont-size: 60px;\nletter-spacing: %spx;\nwidth: 100%%;\npadding-right: 0.1em;\ntext-align: %s;\ncolor: %s;\n}\n#page_container{\ndisplay: inline-block;\nwidth: auto;\nheight: auto;\n}\n</style>\n\n<head>\n<meta charset="UTF-8">\n</head>\n<body>\n<div id="page_container">\n<p id="page">%s</p>\n</div>\n</body>\n</html>') % (font_name, font_path+font_name+font_format, font_name, spacing, align, color, text)
 
-    with open(file_path+fileName, 'w') as f:
+    with open("/"+file_path+"/"+fileName, 'w') as f:
         f.writelines(html_content)
         f.close()
 
