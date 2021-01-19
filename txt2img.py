@@ -25,7 +25,7 @@ def make_test_img(text, align, spacing, font_path, font_name, font_format, color
     file_name = create_file(text, align, spacing, file_path, font_path, font_name, font_format, color)
     file_relative = "/"+file_path+"/"+file_name
     file_abstr = os.path.abspath(file_relative)
-    print('getting sc from '+file_abstr)
+    print('getting sc from '+file_abstr, flush=True)
     driver.get('file://'+file_abstr)
     #driver.get("http://host.docker.internal:5000/sample/"+file_name)
     image_base64 = driver.find_element_by_id('page').screenshot_as_base64
