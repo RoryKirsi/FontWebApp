@@ -2,6 +2,7 @@ from flask import Flask, send_file, jsonify, flash, request, redirect, url_for, 
 import txt2img, functions, os
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
+import sys
 
 UPLOAD_FOLDER = './Fonts/'
 ALLOWED_EXTENSIONS = {'otf', 'ttf'}
@@ -67,4 +68,5 @@ def uploaded_existed_file(filename):
 #     return send_from_directory('html_temp', filename)
 
 if __name__ == '__main__':
+    sys.stdout.flush()
     app.run(debug=True, host="0.0.0.0", port="5000")
